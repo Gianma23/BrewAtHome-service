@@ -16,12 +16,11 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="account", schema="brewathome")
+@Table(name="account")
 public class Account {
     
     @Id
     @Column(name="email")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String email;
     
     @Column(name="password")

@@ -6,7 +6,6 @@ package it.unipi.brewathome.repository;
 
 import it.unipi.brewathome.Account;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 /**

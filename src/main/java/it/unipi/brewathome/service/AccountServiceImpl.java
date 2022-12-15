@@ -7,7 +7,6 @@ package it.unipi.brewathome.service;
 import it.unipi.brewathome.Account;
 import it.unipi.brewathome.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,12 +18,12 @@ public class AccountServiceImpl implements AccountService {
     
     @Autowired
     private AccountRepository accountRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //@Autowired
+   // private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Override
     public void save(Account account) {
-        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+       // account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
     }
     
