@@ -5,12 +5,10 @@
 package it.unipi.brewathome;
 
 import it.unipi.brewathome.repository.AccountRepository;
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,23 +19,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping(path="/account")
+@RequestMapping(path="/auth")
 public class AccountController {
     
     @Autowired
     private AccountRepository accountRepository;
     
-    /*@GetMapping(path="/login")
-    public boolean login(String email, String passwordHash) {
+    @PostMapping(path="/login")
+    public @ResponseBody ResponseEntity<String> login(String email, String password) {
+        Account account = accountRepository.findByEmail(email);
         
-        Account account = accountService.findByEmail(email);
-        if(!passwordHash.equals(account.getPassword()))
-            return false;
-        
-        return true;
-    }*/
+        if(account == null)
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email errata");
+        if(!password.equals(account.getPassword()))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password errata");
+        return ResponseEntity.ok("logged in");
+    }
     
-    @PostMapping(path="/add")
+    @PostMapping(path="/register")
     public @ResponseBody String register(String email, String password) {
         
         Account account = new Account(email, password);
