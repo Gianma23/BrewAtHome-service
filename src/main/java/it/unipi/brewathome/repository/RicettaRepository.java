@@ -5,6 +5,7 @@
 package it.unipi.brewathome.repository;
 
 import it.unipi.brewathome.models.Account;
+import it.unipi.brewathome.models.Ricetta;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +15,8 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface AccountRepository extends CrudRepository<Account, Integer> {
+public interface RicettaRepository extends CrudRepository<Ricetta, Integer> {
     
-    Account findByEmail(String email);
-    boolean existsByEmail(String email);    
+    Iterable<Ricetta> findByAccountId(String accountId);
 }
+ 
