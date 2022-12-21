@@ -5,6 +5,7 @@
 package it.unipi.brewathome.models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,15 +22,15 @@ import javax.persistence.Table;
 public class Ricetta {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="email")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
     
     @Column(name="account_id")
     private String accountId;
 
     @Column(name="nome")
-    private String nome;
+    private String nome = "ricetta";
     
     @Column(name="autore")
     private String autore;
@@ -38,7 +39,7 @@ public class Ricetta {
     private String tipo;
     
     @Column(name="attrezzatura_id")
-    private String attrezzaturaId;
+    private int attrezzaturaId;
     
     @Column(name="stile_id")
     private String stileId;
@@ -59,11 +60,11 @@ public class Ricetta {
     private int ibu;
     
     @Column(name="ultima_modifica")
-    private Date ultimaModifica;
+    private Timestamp ultimaModifica;
     
     public Ricetta() {}
 
-    public Ricetta(int id, String accountId, String nome, String autore, String tipo, String attrezzaturaId, String stileId, int abv, int og, int fg, int ebc, int ibu, Date ultimaModifica) {
+    public Ricetta(int id, String accountId, String nome, String autore, String tipo, int attrezzaturaId, String stileId, int abv, int og, int fg, int ebc, int ibu, Timestamp ultimaModifica) {
         this.id = id;
         this.accountId = accountId;
         this.nome = nome;
@@ -119,11 +120,11 @@ public class Ricetta {
         this.tipo = tipo;
     }
 
-    public String getAttrezzaturaId() {
+    public int getAttrezzaturaId() {
         return attrezzaturaId;
     }
 
-    public void setAttrezzaturaId(String attrezzaturaId) {
+    public void setAttrezzaturaId(int attrezzaturaId) {
         this.attrezzaturaId = attrezzaturaId;
     }
 
@@ -175,11 +176,11 @@ public class Ricetta {
         this.ibu = ibu;
     }
 
-    public Date getUltimaModifica() {
+    public Timestamp getUltimaModifica() {
         return ultimaModifica;
     }
 
-    public void setUltimaModifica(Date ultimaModifica) {
+    public void setUltimaModifica(Timestamp ultimaModifica) {
         this.ultimaModifica = ultimaModifica;
     }
     

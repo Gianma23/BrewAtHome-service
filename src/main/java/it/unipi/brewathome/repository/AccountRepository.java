@@ -17,5 +17,5 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends CrudRepository<Account, Integer> {
     
     Account findByEmail(String email);
-    boolean existsByEmail(String email);    
+    boolean existsByEmail(String email);
 }

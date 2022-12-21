@@ -4,6 +4,8 @@
  */
 package it.unipi.brewathome.controller;
 
+import com.google.gson.Gson;
+import it.unipi.brewathome.AuthRequest;
 import it.unipi.brewathome.models.Account;
 import it.unipi.brewathome.jwt.JwtUtils;
 import it.unipi.brewathome.repository.AccountRepository;
@@ -30,7 +32,12 @@ public class AuthController {
     private JwtUtils jwtUtils;
     
     @PostMapping(path="/login")
-    public @ResponseBody ResponseEntity<?> login(String email, String password) {
+    public @ResponseBody ResponseEntity<?> login(String request) {
+         
+        Gson gson = new Gson();
+        AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);
+        String email = authRequest.getEmail();
+        String password = authRequest.getPassword();
         
         if(!accountRepository.existsByEmail(email))
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nessun account esistente con questa email.");
@@ -40,12 +47,18 @@ public class AuthController {
         if(!password.equals(account.getPassword()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password errata.");
         
+        //TODO log of login
         String token = jwtUtils.generateToken(email);
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().header("Authorization", token).body("accesso riuscito!");
     }
     
     @PostMapping(path="/register")
-    public @ResponseBody ResponseEntity<?> register(String email, String password) {
+    public @ResponseBody ResponseEntity<?> register(String request) {
+        
+        Gson gson = new Gson();
+        AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);
+        String email = authRequest.getEmail();
+        String password = authRequest.getPassword();
         
         if(accountRepository.existsByEmail(email))
             return ResponseEntity.badRequest().body("Esiste già un account con questa email!");
