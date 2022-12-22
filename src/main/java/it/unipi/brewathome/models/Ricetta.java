@@ -4,7 +4,6 @@
  */
 package it.unipi.brewathome.models;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Generated;
 /**
  *
  * @author Utente
@@ -29,19 +30,23 @@ public class Ricetta {
     @Column(name="account_id")
     private String accountId;
 
+    @Generated(GenerationTime.INSERT)
     @Column(name="nome")
-    private String nome = "ricetta";
+    private String nome;
     
     @Column(name="autore")
     private String autore;
     
     @Column(name="tipo")
+    @Generated(GenerationTime.INSERT)
     private String tipo;
     
     @Column(name="attrezzatura_id")
+    @Generated(GenerationTime.INSERT)
     private int attrezzaturaId;
     
     @Column(name="stile_id")
+    @Generated(GenerationTime.INSERT)
     private String stileId;
     
     @Column(name="abv")
@@ -60,6 +65,7 @@ public class Ricetta {
     private int ibu;
     
     @Column(name="ultima_modifica")
+    @Generated(GenerationTime.INSERT)
     private Timestamp ultimaModifica;
     
     public Ricetta() {}
