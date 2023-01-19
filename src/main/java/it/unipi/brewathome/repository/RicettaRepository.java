@@ -18,5 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface RicettaRepository extends CrudRepository<Ricetta, Integer> {
     
     Iterable<Ricetta> findByAccountId(String accountId);
+    Ricetta findById(int id);
 }
  

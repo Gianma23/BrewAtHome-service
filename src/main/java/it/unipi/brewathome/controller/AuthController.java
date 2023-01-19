@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,9 +33,10 @@ public class AuthController {
     private JwtUtils jwtUtils;
     
     @PostMapping(path="/login")
-    public @ResponseBody ResponseEntity<?> login(String request) {
+    public @ResponseBody ResponseEntity<?> login(@RequestBody String request) {
          
         Gson gson = new Gson();
+        System.out.println(request);
         AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);
         String email = authRequest.getEmail();
         String password = authRequest.getPassword();
@@ -49,11 +51,12 @@ public class AuthController {
         
         //TODO log of login
         String token = jwtUtils.generateToken(email);
+        System.out.println(token);
         return ResponseEntity.ok().header("Authorization", token).body("accesso riuscito!");
     }
     
     @PostMapping(path="/register")
-    public @ResponseBody ResponseEntity<?> register(String request) {
+    public @ResponseBody ResponseEntity<?> register(@RequestBody String request) {
         
         Gson gson = new Gson();
         AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);

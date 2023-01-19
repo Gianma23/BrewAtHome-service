@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.Generated;
 /**
  *
  * @author Utente
@@ -56,14 +54,10 @@ public class Fermentabile {
     @Column(name="rendimento")
     private int rendimento;
     
-    @Column(name="non_fermentabile")
-    @Generated(GenerationTime.INSERT)
-    private int nonFermentabile;
-    
     public Fermentabile() {
     }
 
-    public Fermentabile(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int colore, int potenziale, int rendimento, int nonFermentabile) {
+    public Fermentabile(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int colore, int potenziale, int rendimento) {
         this.id = id;
         this.ricettaId = ricettaId;
         this.nome = nome;
@@ -75,7 +69,6 @@ public class Fermentabile {
         this.colore = colore;
         this.potenziale = potenziale;
         this.rendimento = rendimento;
-        this.nonFermentabile = nonFermentabile;
     }
 
     public int getId() {
@@ -164,13 +157,5 @@ public class Fermentabile {
 
     public void setRendimento(int rendimento) {
         this.rendimento = rendimento;
-    }
-
-    public int getNonFermentabile() {
-        return nonFermentabile;
-    }
-
-    public void setNonFermentabile(int nonFermentabile) {
-        this.nonFermentabile = nonFermentabile;
     }
 }
