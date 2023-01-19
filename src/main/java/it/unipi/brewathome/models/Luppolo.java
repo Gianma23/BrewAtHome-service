@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package it.unipi.brewathome.models;
 
 import java.io.Serializable;
@@ -17,8 +13,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="fermentabile")
-public class Fermentabile {
+@Table(name="luppolo")
+public class Luppolo {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,19 +42,16 @@ public class Fermentabile {
     @Column(name="tipo")
     private String tipo;
     
-    @Column(name="colore")
-    private int colore;
+    @Column(name="tempo")
+    private int tempo;
     
-    @Column(name="potenziale")
-    private int potenziale;
+    @Column(name="alpha")
+    private double alpha;
     
-    @Column(name="rendimento")
-    private int rendimento;
-    
-    public Fermentabile() {
+    public Luppolo() {
     }
 
-    public Fermentabile(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int colore, int potenziale, int rendimento) {
+    public Luppolo(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int tempo, double alpha) {
         this.id = id;
         this.ricettaId = ricettaId;
         this.nome = nome;
@@ -67,9 +60,8 @@ public class Fermentabile {
         this.fornitore = fornitore;
         this.provenienza = provenienza;
         this.tipo = tipo;
-        this.colore = colore;
-        this.potenziale = potenziale;
-        this.rendimento = rendimento;
+        this.tempo = tempo;
+        this.alpha = alpha;
     }
 
     public int getId() {
@@ -136,27 +128,19 @@ public class Fermentabile {
         this.tipo = tipo;
     }
 
-    public int getColore() {
-        return colore;
+    public int getTempo() {
+        return tempo;
     }
 
-    public void setColore(int colore) {
-        this.colore = colore;
+    public void setTempo(int tempo) {
+        this.tempo = tempo;
     }
 
-    public int getPotenziale() {
-        return potenziale;
+    public double getAlpha() {
+        return alpha;
     }
 
-    public void setPotenziale(int potenziale) {
-        this.potenziale = potenziale;
-    }
-
-    public int getRendimento() {
-        return rendimento;
-    }
-
-    public void setRendimento(int rendimento) {
-        this.rendimento = rendimento;
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
     }
 }

@@ -51,7 +51,6 @@ public class AuthController {
         
         //TODO log of login
         String token = jwtUtils.generateToken(email);
-        System.out.println(token);
         return ResponseEntity.ok().header("Authorization", token).body("accesso riuscito!");
     }
     
