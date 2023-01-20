@@ -4,6 +4,7 @@
  */
 package it.unipi.brewathome.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 /**
  *
  * @author Utente
@@ -22,7 +21,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="ricetta")
-public class Ricetta {
+public class Ricetta implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +35,9 @@ public class Ricetta {
     @Column(name="nome")
     private String nome;
     
+    @Column(name="descrizione")
+    private String descrizione;
+    
     @Column(name="autore")
     private String autore;
     
@@ -43,14 +45,18 @@ public class Ricetta {
     @Generated(GenerationTime.INSERT)
     private String tipo;
     
-    @Column(name="attrezzatura_id")
-    @Generated(GenerationTime.INSERT)
-    private int attrezzaturaId;
-    
     @Column(name="stile_id")
     @Generated(GenerationTime.INSERT)
     private String stileId;
     
+    @Column(name="volume")
+    @Generated(GenerationTime.INSERT)
+    private double volume;
+    
+    @Column(name="rendimento")
+    @Generated(GenerationTime.INSERT)
+    private double rendimento;
+        
     @Column(name="abv")
     private int abv;
     
@@ -72,14 +78,16 @@ public class Ricetta {
     
     public Ricetta() {}
 
-    public Ricetta(int id, String accountId, String nome, String autore, String tipo, int attrezzaturaId, String stileId, int abv, int og, int fg, int ebc, int ibu, Timestamp ultimaModifica) {
+    public Ricetta(int id, String accountId, String nome, String descrizione, String autore, String tipo, String stileId, double volume, double rendimento, int abv, int og, int fg, int ebc, int ibu, Timestamp ultimaModifica) {
         this.id = id;
         this.accountId = accountId;
         this.nome = nome;
+        this.descrizione = descrizione;
         this.autore = autore;
         this.tipo = tipo;
-        this.attrezzaturaId = attrezzaturaId;
         this.stileId = stileId;
+        this.volume = volume;
+        this.rendimento = rendimento;
         this.abv = abv;
         this.og = og;
         this.fg = fg;
@@ -112,6 +120,14 @@ public class Ricetta {
         this.nome = nome;
     }
 
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
     public String getAutore() {
         return autore;
     }
@@ -128,20 +144,28 @@ public class Ricetta {
         this.tipo = tipo;
     }
 
-    public int getAttrezzaturaId() {
-        return attrezzaturaId;
-    }
-
-    public void setAttrezzaturaId(int attrezzaturaId) {
-        this.attrezzaturaId = attrezzaturaId;
-    }
-
     public String getStileId() {
         return stileId;
     }
 
     public void setStileId(String stileId) {
         this.stileId = stileId;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    public double getRendimento() {
+        return rendimento;
+    }
+
+    public void setRendimento(double rendimento) {
+        this.rendimento = rendimento;
     }
 
     public int getAbv() {
@@ -191,6 +215,4 @@ public class Ricetta {
     public void setUltimaModifica(Timestamp ultimaModifica) {
         this.ultimaModifica = ultimaModifica;
     }
-    
-    
 }

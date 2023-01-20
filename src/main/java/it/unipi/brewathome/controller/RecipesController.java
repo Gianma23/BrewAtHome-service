@@ -92,14 +92,12 @@ public class RecipesController {
         Ricetta ricetta = ricettaRepository.findById(ricettaObj.get("id").getAsInt());
         if(!ricetta.getAccountId().equals(account))
             return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
-                
-        ricetta.setNome(ricettaObj.get("nome").getAsString());
-        ricetta.setAutore(ricettaObj.get("autore").getAsString());
-        ricetta.setTipo(ricettaObj.get("tipo").getAsString());
-        ricetta.setAttrezzaturaId(ricettaObj.get("attrezzaturaId").getAsInt());
-        ricetta.setUltimaModifica(new Timestamp((new java.util.Date()).getTime()));
+        System.out.println(request);
+        Ricetta ricettaNuova = gson.fromJson(request, Ricetta.class);
+        ricettaNuova.setAccountId(account);
+        ricettaNuova.setUltimaModifica(new Timestamp((new java.util.Date()).getTime()));
         
-        ricettaRepository.save(ricetta);
+        ricettaRepository.save(ricettaNuova);
         
         return ResponseEntity.ok().body("ricetta salvata con successo!");
     }
