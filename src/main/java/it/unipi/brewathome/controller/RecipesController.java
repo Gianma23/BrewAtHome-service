@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unipi.brewathome.jwt.JwtUtils;
-import it.unipi.brewathome.models.Fermentabile;
-import it.unipi.brewathome.models.Luppolo;
 import it.unipi.brewathome.models.Ricetta;
 import it.unipi.brewathome.repository.FermentabileRepository;
 import it.unipi.brewathome.repository.LuppoloRepository;
@@ -14,6 +12,7 @@ import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,7 +91,7 @@ public class RecipesController {
         
         Ricetta ricetta = ricettaRepository.findById(ricettaObj.get("id").getAsInt());
         if(!ricetta.getAccountId().equals(account))
-            return ResponseEntity.badRequest().body("Questo account non ha i permessi.");;
+            return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
                 
         ricetta.setNome(ricettaObj.get("nome").getAsString());
         ricetta.setAutore(ricettaObj.get("autore").getAsString());
@@ -105,90 +104,18 @@ public class RecipesController {
         return ResponseEntity.ok().body("ricetta salvata con successo!");
     }
     
-    @GetMapping(path="/fermentables")
-    public @ResponseBody Iterable<Fermentabile> getFermentables(@RequestHeader(name = "Authorization") String token, @RequestParam int recipe) {
+    @DeleteMapping(path="/remove")
+    public @ResponseBody ResponseEntity<?> removeRecipe(@RequestHeader(name = "Authorization") String token, @RequestParam int recipe) {
         
-        jwtUtils.validateToken(token);  
+        jwtUtils.validateToken(token);
         String account = jwtUtils.getAccountFromToken(token);
+        
         Ricetta ricetta = ricettaRepository.findById(recipe);
-        if(!ricetta.getAccountId().equals(account))
-            return null;
-        
-        Iterable<Fermentabile> fermentabile = fermentabileRepository.findByRicettaId(recipe);
-        return fermentabile;
-    }
-    
-    @PostMapping(path="/fermentables/add")
-    public @ResponseBody ResponseEntity<?> addFermentable(@RequestHeader(name = "Authorization") String token, @RequestBody String recipe) {
-        
-        jwtUtils.validateToken(token);  
-        String account = jwtUtils.getAccountFromToken(token);
-        
-        Gson gson = new Gson();
-        JsonElement json = gson.fromJson(recipe, JsonElement.class);
-        JsonObject fermentableObj = json.getAsJsonObject();
-        
-        Fermentabile fermentabile = new Fermentabile();
-        fermentabile.setRicettaId(fermentableObj.get("ricettaId").getAsInt());
-        fermentabile.setQuantita(fermentableObj.get("quantita").getAsInt());
-        fermentabile.setColore(fermentableObj.get("colore").getAsInt());
-        fermentabile.setPotenziale(fermentableObj.get("potenziale").getAsInt());
-        fermentabile.setRendimento(fermentableObj.get("rendimento").getAsInt());
-        fermentabile.setNome(fermentableObj.get("nome").getAsString());
-        fermentabile.setCategoria(fermentableObj.get("categoria").getAsString());
-        fermentabile.setFornitore(fermentableObj.get("fornitore").getAsString());
-        fermentabile.setProvenienza(fermentableObj.get("provenienza").getAsString());
-        fermentabile.setTipo(fermentableObj.get("tipo").getAsString());
-        
-        Ricetta ricetta = ricettaRepository.findById(fermentableObj.get("ricettaId").getAsInt());
         if(!ricetta.getAccountId().equals(account))
             return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
         
-        fermentabileRepository.save(fermentabile);
+        ricettaRepository.delete(ricetta);
         
-        return ResponseEntity.ok().body("Fermentabile aggiunto/modificato!");
-    }
-    
-    @GetMapping(path="/hops")
-    public @ResponseBody Iterable<Luppolo> getHops(@RequestHeader(name = "Authorization") String token, @RequestParam int recipe) {
-        
-        jwtUtils.validateToken(token);  
-        String account = jwtUtils.getAccountFromToken(token);
-        Ricetta ricetta = ricettaRepository.findById(recipe);
-        if(!ricetta.getAccountId().equals(account))
-            return null;
-        
-        Iterable<Luppolo> luppolo = luppoloRepository.findByRicettaId(recipe);
-        return luppolo;
-    }
-    
-    @PostMapping(path="/hops/add")
-    public @ResponseBody ResponseEntity<?> addHop(@RequestHeader(name = "Authorization") String token, @RequestBody String recipe) {
-        
-        jwtUtils.validateToken(token);  
-        String account = jwtUtils.getAccountFromToken(token);
-        
-        Gson gson = new Gson();
-        JsonElement json = gson.fromJson(recipe, JsonElement.class);
-        JsonObject fermentableObj = json.getAsJsonObject();
-        
-        Luppolo luppolo = new Luppolo();
-        luppolo.setRicettaId(fermentableObj.get("ricettaId").getAsInt());
-        luppolo.setQuantita(fermentableObj.get("quantita").getAsInt());
-        luppolo.setTempo(fermentableObj.get("tempo").getAsInt());
-        luppolo.setAlpha(fermentableObj.get("alpha").getAsDouble());
-        luppolo.setNome(fermentableObj.get("nome").getAsString());
-        luppolo.setCategoria(fermentableObj.get("categoria").getAsString());
-        luppolo.setFornitore(fermentableObj.get("fornitore").getAsString());
-        luppolo.setProvenienza(fermentableObj.get("provenienza").getAsString());
-        luppolo.setTipo(fermentableObj.get("tipo").getAsString());
-        
-        Ricetta ricetta = ricettaRepository.findById(fermentableObj.get("ricettaId").getAsInt());
-        if(!ricetta.getAccountId().equals(account))
-            return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
-        
-        luppoloRepository.save(luppolo);
-        
-        return ResponseEntity.ok().body("Fermentabile aggiunto/modificato!");
+        return ResponseEntity.ok().body("ricetta eliminata con successo!");
     }
 }

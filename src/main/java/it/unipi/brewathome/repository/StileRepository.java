@@ -1,7 +1,7 @@
 package it.unipi.brewathome.repository;
 
-import it.unipi.brewathome.models.Account;
 import it.unipi.brewathome.models.Ricetta;
+import it.unipi.brewathome.models.Stile;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +11,8 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface RicettaRepository extends CrudRepository<Ricetta, Integer> {
+public interface StileRepository extends CrudRepository<Stile, Integer> {
     
-    Iterable<Ricetta> findByAccountId(String accountId);
-    Ricetta findById(int id);
+    Iterable<Stile> findByGuida(String guida);
 }
  

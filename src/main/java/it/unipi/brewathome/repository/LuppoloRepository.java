@@ -4,8 +4,8 @@
  */
 package it.unipi.brewathome.repository;
 
-import it.unipi.brewathome.models.Fermentabile;
 import it.unipi.brewathome.models.Luppolo;
+import it.unipi.brewathome.models.Ricetta;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface LuppoloRepository extends CrudRepository<Luppolo, Integer> {
     
     Iterable<Luppolo> findByRicettaId(int ricettaId);
+    Luppolo findById(int id);
 }
  

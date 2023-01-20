@@ -18,5 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface FermentabileRepository extends CrudRepository<Fermentabile, Integer> {
     
     Iterable<Fermentabile> findByRicettaId(int ricettaId);
+    Fermentabile findById(int id);
 }
  

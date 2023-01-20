@@ -27,11 +27,8 @@ public class StyleController {
         
         String path = getClass().getResource("/style/colors.json").toString();
         path = path.substring(6);
-        System.out.println(path);
         try {
-            // default StandardCharsets.UTF_8
             String content = Files.readString(Path.of(path));
-            
             return content;
         } catch (IOException e) {
             e.printStackTrace();
