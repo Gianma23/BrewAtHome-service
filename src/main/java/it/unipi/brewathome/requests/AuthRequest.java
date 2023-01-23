@@ -1,15 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package it.unipi.brewathome;
+package it.unipi.brewathome.requests;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Utente
- */
 public class AuthRequest implements Serializable {
     
     public String email;   

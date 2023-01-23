@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package it.unipi.brewathome.models;
 
 import java.io.Serializable;
@@ -14,10 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.Generated;
-/**
- *
- * @author Utente
- */
+
 
 @Entity
 @Table(name="ricetta")
@@ -56,21 +49,6 @@ public class Ricetta implements Serializable {
     @Column(name="rendimento")
     @Generated(GenerationTime.INSERT)
     private double rendimento;
-        
-    @Column(name="abv")
-    private int abv;
-    
-    @Column(name="og")
-    private int og;
-    
-    @Column(name="fg")
-    private int fg;
-    
-    @Column(name="ebc")
-    private int ebc;
-    
-    @Column(name="ibu")
-    private int ibu;
     
     @Column(name="ultima_modifica")
     @Generated(GenerationTime.INSERT)
@@ -78,7 +56,7 @@ public class Ricetta implements Serializable {
     
     public Ricetta() {}
 
-    public Ricetta(int id, String accountId, String nome, String descrizione, String autore, String tipo, String stileId, double volume, double rendimento, int abv, int og, int fg, int ebc, int ibu, Timestamp ultimaModifica) {
+    public Ricetta(int id, String accountId, String nome, String descrizione, String autore, String tipo, String stileId, double volume, double rendimento, Timestamp ultimaModifica) {
         this.id = id;
         this.accountId = accountId;
         this.nome = nome;
@@ -88,11 +66,6 @@ public class Ricetta implements Serializable {
         this.stileId = stileId;
         this.volume = volume;
         this.rendimento = rendimento;
-        this.abv = abv;
-        this.og = og;
-        this.fg = fg;
-        this.ebc = ebc;
-        this.ibu = ibu;
         this.ultimaModifica = ultimaModifica;
     }
 
@@ -166,46 +139,6 @@ public class Ricetta implements Serializable {
 
     public void setRendimento(double rendimento) {
         this.rendimento = rendimento;
-    }
-
-    public int getAbv() {
-        return abv;
-    }
-
-    public void setAbv(int abv) {
-        this.abv = abv;
-    }
-
-    public int getOg() {
-        return og;
-    }
-
-    public void setOg(int og) {
-        this.og = og;
-    }
-
-    public int getFg() {
-        return fg;
-    }
-
-    public void setFg(int fg) {
-        this.fg = fg;
-    }
-
-    public int getEbc() {
-        return ebc;
-    }
-
-    public void setEbc(int ebc) {
-        this.ebc = ebc;
-    }
-
-    public int getIbu() {
-        return ibu;
-    }
-
-    public void setIbu(int ibu) {
-        this.ibu = ibu;
     }
 
     public Timestamp getUltimaModifica() {

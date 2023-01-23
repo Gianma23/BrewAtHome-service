@@ -1,21 +1,13 @@
 package it.unipi.brewathome.models;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
-/**
- *
- * @author Utente
- */
+
 
 @Entity
 @Table(name="fermentabile")
@@ -51,15 +43,14 @@ public class Fermentabile implements Serializable {
     private int colore;
     
     @Column(name="potenziale")
-    private int potenziale;
+    private double potenziale;
     
     @Column(name="rendimento")
-    private int rendimento;
+    private double rendimento;
     
-    public Fermentabile() {
-    }
+    public Fermentabile() {}
 
-    public Fermentabile(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int colore, int potenziale, int rendimento) {
+    public Fermentabile(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int colore, double potenziale, double rendimento) {
         this.id = id;
         this.ricettaId = ricettaId;
         this.nome = nome;
@@ -145,19 +136,19 @@ public class Fermentabile implements Serializable {
         this.colore = colore;
     }
 
-    public int getPotenziale() {
+    public double getPotenziale() {
         return potenziale;
     }
 
-    public void setPotenziale(int potenziale) {
+    public void setPotenziale(double potenziale) {
         this.potenziale = potenziale;
     }
 
-    public int getRendimento() {
+    public double getRendimento() {
         return rendimento;
     }
 
-    public void setRendimento(int rendimento) {
+    public void setRendimento(double rendimento) {
         this.rendimento = rendimento;
     }
 }

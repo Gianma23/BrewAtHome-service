@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author Utente
- */
 
 @Controller
 @RequestMapping(path="/categories")
@@ -26,8 +22,13 @@ public class BeerStylesController {
         return stileRepository.findAll();
     }
     
-    @GetMapping(path="/filter")
+    @GetMapping(path="/filter-guide")
     public @ResponseBody Iterable<Stile> getStyleGuide(@RequestParam String guide) {
         return stileRepository.findByGuida(guide);
+    }
+    
+    @GetMapping(path="/filter-name")
+    public @ResponseBody Stile getStyle(@RequestParam String name) {
+        return stileRepository.findByNome(name);
     }
 }

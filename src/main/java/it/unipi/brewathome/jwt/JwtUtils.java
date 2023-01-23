@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package it.unipi.brewathome.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -10,21 +6,18 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import org.slf4j.Logger;
 import java.util.Date;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Utente
- */
+
 @Component
 public class JwtUtils {
     
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+    private static final Logger logger = LogManager.getLogger(JwtUtils.class.getName());
     private final String jwtSecret = "$C&F)J@NcRfUjWnZ";
-    private final long expirationMs = 86400000;
+    private final long expirationMs = 86400000; // 1 giorno
     
     public String generateToken(String email) {
         return Jwts.builder()

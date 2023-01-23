@@ -1,20 +1,13 @@
 package it.unipi.brewathome.models;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-/**
- *
- * @author Utente
- */
+
 
 @Entity
 @Table(name="luppolo")
@@ -33,10 +26,7 @@ public class Luppolo implements Serializable {
     
     @Column(name="quantita")
     private int quantita;
-    
-    @Column(name="categoria")
-    private String categoria;
-    
+
     @Column(name="fornitore")
     private String fornitore;
     
@@ -52,15 +42,13 @@ public class Luppolo implements Serializable {
     @Column(name="alpha")
     private double alpha;
     
-    public Luppolo() {
-    }
+    public Luppolo() {}
 
-    public Luppolo(int id, int ricettaId, String nome, int quantita, String categoria, String fornitore, String provenienza, String tipo, int tempo, double alpha) {
+    public Luppolo(int id, int ricettaId, String nome, int quantita, String fornitore, String provenienza, String tipo, int tempo, double alpha) {
         this.id = id;
         this.ricettaId = ricettaId;
         this.nome = nome;
         this.quantita = quantita;
-        this.categoria = categoria;
         this.fornitore = fornitore;
         this.provenienza = provenienza;
         this.tipo = tipo;
@@ -98,14 +86,6 @@ public class Luppolo implements Serializable {
 
     public void setQuantita(int quantita) {
         this.quantita = quantita;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public String getFornitore() {

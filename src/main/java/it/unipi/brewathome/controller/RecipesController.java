@@ -5,8 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unipi.brewathome.jwt.JwtUtils;
 import it.unipi.brewathome.models.Ricetta;
-import it.unipi.brewathome.repository.FermentabileRepository;
-import it.unipi.brewathome.repository.LuppoloRepository;
 import it.unipi.brewathome.repository.RicettaRepository;
 import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author Utente
- */
 
 @Controller
 @RequestMapping(path="/recipes")
@@ -32,12 +26,6 @@ public class RecipesController {
     
     @Autowired
     private RicettaRepository ricettaRepository;
-    
-    @Autowired
-    private FermentabileRepository fermentabileRepository;
-    
-    @Autowired
-    private LuppoloRepository luppoloRepository;
         
     @Autowired
     private JwtUtils jwtUtils;
@@ -51,19 +39,6 @@ public class RecipesController {
         return ricettaRepository.findByAccountId(account);
     }
     
-    @GetMapping(path="/info")
-    public @ResponseBody Ricetta getRecipe(@RequestHeader(name = "Authorization") String token, @RequestParam int recipe) {
-        
-        jwtUtils.validateToken(token);
-        String account = jwtUtils.getAccountFromToken(token);
-        
-        Ricetta ricetta = ricettaRepository.findById(recipe);
-        if(ricetta.getAccountId().equals(account))
-            return ricetta;
-        else
-            return null;
-    }
-    
     @PostMapping(path="/add")
     public @ResponseBody ResponseEntity<?> addRecipe(@RequestHeader(name = "Authorization") String token) {
         
@@ -75,13 +50,12 @@ public class RecipesController {
         
         Ricetta ricettaAggiunta = ricettaRepository.save(ricetta);
         
-        int ricettaId = ricettaAggiunta.getId();
-        return ResponseEntity.ok().body(ricettaId);
+        return ResponseEntity.ok().body(ricettaAggiunta);
     }
     
     @PostMapping(path="/update")
     public @ResponseBody ResponseEntity<?> updateRecipe(@RequestHeader(name = "Authorization") String token, @RequestBody String request) {
-        
+       
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);
         
@@ -92,7 +66,7 @@ public class RecipesController {
         Ricetta ricetta = ricettaRepository.findById(ricettaObj.get("id").getAsInt());
         if(!ricetta.getAccountId().equals(account))
             return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
-        System.out.println(request);
+        
         Ricetta ricettaNuova = gson.fromJson(request, Ricetta.class);
         ricettaNuova.setAccountId(account);
         ricettaNuova.setUltimaModifica(new Timestamp((new java.util.Date()).getTime()));
@@ -104,7 +78,7 @@ public class RecipesController {
     
     @DeleteMapping(path="/remove")
     public @ResponseBody ResponseEntity<?> removeRecipe(@RequestHeader(name = "Authorization") String token, @RequestParam int recipe) {
-        
+
         jwtUtils.validateToken(token);
         String account = jwtUtils.getAccountFromToken(token);
         
@@ -114,6 +88,6 @@ public class RecipesController {
         
         ricettaRepository.delete(ricetta);
         
-        return ResponseEntity.ok().body("ricetta eliminata con successo!");
+        return ResponseEntity.ok().body(ricetta);
     }
 }

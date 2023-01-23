@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package it.unipi.brewathome.controller;
 
 import com.google.gson.Gson;
-import it.unipi.brewathome.AuthRequest;
+import it.unipi.brewathome.requests.AuthRequest;
 import it.unipi.brewathome.models.Account;
 import it.unipi.brewathome.jwt.JwtUtils;
 import it.unipi.brewathome.repository.AccountRepository;
@@ -18,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author Utente
- */
 
 @Controller
 @RequestMapping(path="/auth")
@@ -36,7 +28,6 @@ public class AuthController {
     public @ResponseBody ResponseEntity<?> login(@RequestBody String request) {
          
         Gson gson = new Gson();
-        System.out.println(request);
         AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);
         String email = authRequest.getEmail();
         String password = authRequest.getPassword();
@@ -49,7 +40,6 @@ public class AuthController {
         if(!password.equals(account.getPassword()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password errata.");
         
-        //TODO log of login
         String token = jwtUtils.generateToken(email);
         return ResponseEntity.ok().header("Authorization", token).body("accesso riuscito!");
     }
