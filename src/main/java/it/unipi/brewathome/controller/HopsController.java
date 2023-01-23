@@ -61,11 +61,11 @@ public class HopsController {
         
         luppoloRepository.save(hop);
         
-        return ResponseEntity.ok().body("Luppolo aggiunto/modificato!");
+        return ResponseEntity.ok().body(hop.getId());
     }
     
     @DeleteMapping(path="/remove")
-    public @ResponseBody ResponseEntity<?> removeFermentable(@RequestHeader(name = "Authorization") String token, @RequestParam int id) {
+    public @ResponseBody ResponseEntity<?> removeHop(@RequestHeader(name = "Authorization") String token, @RequestParam int id) {
        
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);

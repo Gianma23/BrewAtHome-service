@@ -61,7 +61,7 @@ public class FermentablesController {
         
         fermentabileRepository.save(fermentable);
         
-        return ResponseEntity.ok().body("Fermentabile aggiunto/modificato!");
+        return ResponseEntity.ok().body(fermentable.getId());
     }
     
     @DeleteMapping(path="/remove")
