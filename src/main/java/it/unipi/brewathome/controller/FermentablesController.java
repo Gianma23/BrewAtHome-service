@@ -59,6 +59,10 @@ public class FermentablesController {
         if(!ricetta.getAccountId().equals(account))
             return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
         
+        //controlli input
+        if(!validateInput(fermentable))
+            return ResponseEntity.badRequest().body("Parametri non validi.");
+        
         fermentabileRepository.save(fermentable);
         
         return ResponseEntity.ok().body(fermentable.getId());
@@ -78,5 +82,10 @@ public class FermentablesController {
         fermentabileRepository.delete(fermentabile);
         
         return ResponseEntity.ok().body(fermentabile);
+    }
+    
+    private boolean validateInput(Fermentabile ferm) {
+        return !(ferm.getPotenziale() < 1 || ferm.getColore() < 1 ||
+                ferm.getQuantita() <= 0 || ferm.getRendimento() < 0);
     }
 }

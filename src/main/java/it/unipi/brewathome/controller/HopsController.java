@@ -2,6 +2,7 @@ package it.unipi.brewathome.controller;
 
 import com.google.gson.Gson;
 import it.unipi.brewathome.jwt.JwtUtils;
+import it.unipi.brewathome.models.Fermentabile;
 import it.unipi.brewathome.models.Luppolo;
 import it.unipi.brewathome.models.Ricetta;
 import it.unipi.brewathome.repository.LuppoloRepository;
@@ -59,6 +60,10 @@ public class HopsController {
         if(!ricetta.getAccountId().equals(account))
             return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
         
+        //controlli input
+        if(!validateInput(hop))
+            return ResponseEntity.badRequest().body("Parametri non validi.");
+        
         luppoloRepository.save(hop);
         
         return ResponseEntity.ok().body(hop.getId());
@@ -78,5 +83,9 @@ public class HopsController {
         luppoloRepository.delete(luppolo);
         
         return ResponseEntity.ok().body("Luppolo rimosso!");
+    }
+    
+    private boolean validateInput(Luppolo lup) {
+        return !(lup.getQuantita() < 0 || lup.getAlpha() < 0 || lup.getTempo() < 0);
     }
 }

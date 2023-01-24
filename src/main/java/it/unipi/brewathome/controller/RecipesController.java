@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import it.unipi.brewathome.jwt.JwtUtils;
+import it.unipi.brewathome.models.Luppolo;
 import it.unipi.brewathome.models.Ricetta;
 import it.unipi.brewathome.repository.RicettaRepository;
 import java.sql.Timestamp;
@@ -60,16 +61,18 @@ public class RecipesController {
         String account = jwtUtils.getAccountFromToken(token);
         
         Gson gson = new Gson();
-        JsonElement json = gson.fromJson(request, JsonElement.class);
-        JsonObject ricettaObj = json.getAsJsonObject();
+        Ricetta ricettaNuova = gson.fromJson(request, Ricetta.class);
         
-        Ricetta ricetta = ricettaRepository.findById(ricettaObj.get("id").getAsInt());
+        Ricetta ricetta = ricettaRepository.findById(ricettaNuova.getId());
         if(!ricetta.getAccountId().equals(account))
             return ResponseEntity.badRequest().body("Questo account non ha i permessi.");
         
-        Ricetta ricettaNuova = gson.fromJson(request, Ricetta.class);
-        ricettaNuova.setAccountId(account);
+        ricettaNuova.setAccountId(ricetta.getAccountId());
         ricettaNuova.setUltimaModifica(new Timestamp((new java.util.Date()).getTime()));
+        
+        //controlli input
+        if(!validateInput(ricettaNuova))
+            return ResponseEntity.badRequest().body("Parametri non validi.");
         
         ricettaRepository.save(ricettaNuova);
         
@@ -89,5 +92,9 @@ public class RecipesController {
         ricettaRepository.delete(ricetta);
         
         return ResponseEntity.ok().body(ricetta);
+    }
+    
+    private boolean validateInput(Ricetta ric) {
+        return !(ric.getVolume() <= 0 || ric.getRendimento() <= 0);
     }
 }
