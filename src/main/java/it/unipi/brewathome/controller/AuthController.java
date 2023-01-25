@@ -1,7 +1,6 @@
 package it.unipi.brewathome.controller;
 
 import com.google.gson.Gson;
-import it.unipi.brewathome.requests.AuthRequest;
 import it.unipi.brewathome.models.Account;
 import it.unipi.brewathome.jwt.JwtUtils;
 import it.unipi.brewathome.repository.AccountRepository;
@@ -29,14 +28,12 @@ public class AuthController {
     public @ResponseBody ResponseEntity<?> login(@RequestBody String request) {
         
         Gson gson = new Gson();
-        AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);
-        String email = authRequest.getEmail();
-        String password = authRequest.getPassword();
+        Account account = gson.fromJson(request, Account.class);
+        String email = account.getEmail();
+        String password = account.getPassword();
         
         if(!accountRepository.existsByEmail(email))
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nessun account esistente con questa email.");
-            
-        Account account = accountRepository.findByEmail(email);
         
         if(!password.equals(account.getPassword()))
             return ResponseEntity.badRequest().body("Password errata.");
@@ -49,9 +46,8 @@ public class AuthController {
     public @ResponseBody ResponseEntity<?> register(@RequestBody String request) {
         
         Gson gson = new Gson();
-        AuthRequest authRequest = gson.fromJson(request, AuthRequest.class);
-        String email = authRequest.getEmail();
-        String password = authRequest.getPassword();
+        Account account = gson.fromJson(request, Account.class);
+        String email = account.getEmail();
         
         //controlli input
         Pattern pattern = Pattern.compile("^(.+)@(\\S+)$");
@@ -61,7 +57,6 @@ public class AuthController {
         if(accountRepository.existsByEmail(email))
             return ResponseEntity.badRequest().body("Esiste già un account con questa email!");
             
-        Account account = new Account(email, password);
         accountRepository.save(account);
         
         return ResponseEntity.ok("Account registrato con successo!");
