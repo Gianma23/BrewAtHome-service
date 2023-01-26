@@ -19,6 +19,7 @@ public class BeerStylesController {
      
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Stile> getAllStyleGuides() {
+
         return stileRepository.findAll();
     }
     

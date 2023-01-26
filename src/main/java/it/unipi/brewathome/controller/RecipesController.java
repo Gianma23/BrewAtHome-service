@@ -30,16 +30,16 @@ public class RecipesController {
     
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Ricetta> getAccountRecipes(@RequestHeader(name = "Authorization") String token) {
-        
+
         jwtUtils.validateToken(token);
         String account = jwtUtils.getAccountFromToken(token);
         
         return ricettaRepository.findByAccountId(account);
     }
     
-    @PostMapping(path="/add")
+    @GetMapping(path="/add")
     public @ResponseBody ResponseEntity<?> addRecipe(@RequestHeader(name = "Authorization") String token) {
-        
+
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);
         
@@ -53,7 +53,7 @@ public class RecipesController {
     
     @PostMapping(path="/update")
     public @ResponseBody ResponseEntity<?> updateRecipe(@RequestHeader(name = "Authorization") String token, @RequestBody String request) {
-       
+
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);
         

@@ -18,7 +18,7 @@ public class StyleController {
     
     @GetMapping(path="/colors")
     public @ResponseBody String getColorTokens() throws IOException {
-        
+
         String path = getClass().getResource("/style/colors.json").toString();
         path = path.substring(6);
         try {

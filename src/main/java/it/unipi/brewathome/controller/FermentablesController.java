@@ -34,7 +34,7 @@ public class FermentablesController {
     
     @GetMapping(path="/all")
     public @ResponseBody Iterable<Fermentabile> getFermentables(@RequestHeader(name = "Authorization") String token, @RequestParam int recipe) {
-        
+
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);
         
@@ -48,7 +48,7 @@ public class FermentablesController {
     
     @PostMapping(path="/add")
     public @ResponseBody ResponseEntity<?> addFermentable(@RequestHeader(name = "Authorization") String token, @RequestBody String recipe) {
-     
+
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);
         
@@ -70,7 +70,7 @@ public class FermentablesController {
     
     @DeleteMapping(path="/remove")
     public @ResponseBody ResponseEntity<?> removeFermentable(@RequestHeader(name = "Authorization") String token, @RequestParam int id) {
-     
+
         jwtUtils.validateToken(token);  
         String account = jwtUtils.getAccountFromToken(token);
         

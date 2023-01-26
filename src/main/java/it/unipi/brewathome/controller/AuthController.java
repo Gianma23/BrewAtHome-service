@@ -25,7 +25,7 @@ public class AuthController {
     private JwtUtils jwtUtils;
     
     @PostMapping(path="/login")
-    public @ResponseBody ResponseEntity<?> login(@RequestBody String request) {
+    public @ResponseBody ResponseEntity<?> login(@RequestBody String request) {      
         
         Gson gson = new Gson();
         Account account = gson.fromJson(request, Account.class);
