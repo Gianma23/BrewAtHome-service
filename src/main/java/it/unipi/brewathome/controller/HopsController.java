@@ -81,7 +81,7 @@ public class HopsController {
         
         luppoloRepository.delete(luppolo);
         
-        return ResponseEntity.ok().body("Luppolo rimosso!");
+        return ResponseEntity.ok().body(luppolo);
     }
     
     private boolean validateInput(Luppolo lup) {
